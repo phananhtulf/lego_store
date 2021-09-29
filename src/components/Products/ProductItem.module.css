@@ -1,0 +1,14 @@
+.name,
+.name:hover {
+  color: black;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
