@@ -38,6 +38,4 @@ const mapState = (state) => {
   return { isLoading: state.loadingReducer.isLoading };
 };
 
-const mapDispatch = {};
-
-export default connect(mapState, mapDispatch)(Layout);
+export default connect(mapState, null)(Layout);

@@ -63,6 +63,4 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = {};
-
-export default connect(mapState, mapDispatch)(Category);
+export default connect(mapState, null)(Category);

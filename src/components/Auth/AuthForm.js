@@ -125,14 +125,9 @@ const AuthForm = (props) => {
     </Container>
   );
 };
-
-const mapState = (state) => {
-  return {};
-};
-
 const mapDispatch = {
   actFetchTempCart,
   actFetchAllProduct,
 };
 
-export default connect(mapState, mapDispatch)(AuthForm);
+export default connect(null, mapDispatch)(AuthForm);

@@ -69,13 +69,9 @@ const ProductItem = (props) => {
   );
 };
 
-const mapState = (state) => {
-  return {};
-};
-
 const mapDispatch = {
   addItem,
   actFetchSingleProduct,
 };
 
-export default connect(mapState, mapDispatch)(ProductItem);
+export default connect(null, mapDispatch)(ProductItem);
