@@ -39,7 +39,8 @@ const ProductList = (props) => {
       categoryList[product.category] = product.category;
     }
   });
-
+  console.log("searchValue:", searchValue);
+  console.log("categoryFilter:", categoryFilter);
   // Filter products
   const filterProducts =
     categoryFilter === "All"
@@ -64,8 +65,8 @@ const ProductList = (props) => {
   const searchHandler = (e) => {
     e.preventDefault();
     const valueSearch =
-      e.target[0] !== undefined ? e.target[0].value : e.target.value;
-    setSearchValue(valueSearch);
+      e.target[1] !== undefined ? e.target[1].value : e.target.value;
+    setSearchValue(valueSearch.toLowerCase());
     setCurrentPage(1);
   };
   // Filter by Catergory
@@ -137,29 +138,35 @@ const ProductList = (props) => {
         </Col>
       </Card.Header>
       <Card.Body>
-        <Container>
-          <Row xs={5}>{productsList}</Row>
+        <Container className="d-flex justify-content-center">
+          {pageCount !== 0 && <Row xs={5}>{productsList}</Row>}
+          {pageCount === 0 && (
+            <Row>
+              <span>No product found!</span>
+            </Row>
+          )}
         </Container>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-center">
-        <ReactPaginate
-          containerClassName={"pagination mb-6"}
-          previousLabel={"Previous"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          breakLabel={"..."}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-          nextLabel={"Next"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          onPageChange={reactPaginateHandler}
-        />
+        {pageCount !== 0 && (
+          <ReactPaginate
+            containerClassName={"pagination mb-6"}
+            previousLabel={"Previous"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            breakLabel={"..."}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+            nextLabel={"Next"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            pageCount={pageCount}
+            onPageChange={reactPaginateHandler}
+          />
+        )}
       </Card.Footer>
     </Card>
   );
