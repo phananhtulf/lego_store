@@ -4,46 +4,44 @@ const FIREBASE_DOMAIN =
   "https://lego-store-reactjs-default-rtdb.firebaseio.com/";
 
 export async function fetchAllProduct() {
-  return axios({
-    method: "GET",
-    url: `${FIREBASE_DOMAIN}/products.json?auth=${localStorage.getItem(
-      "token"
-    )}`,
-    data: null,
-  }).catch((err) => {
-    console.log(err);
-  });
+  return axios
+    .get(
+      `${FIREBASE_DOMAIN}/products.json?auth=${localStorage.getItem("token")}`
+    )
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export async function fetchSingleProduct(productId) {
-  return axios({
-    method: "GET",
-    url: `${FIREBASE_DOMAIN}/products/${productId}.json?auth=${localStorage.getItem(
-      "token"
-    )}`,
-    data: null,
-  }).catch((err) => {
-    console.log(err);
-  });
+  return axios
+    .get(
+      `${FIREBASE_DOMAIN}/products/${productId}.json?auth=${localStorage.getItem(
+        "token"
+      )}`
+    )
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export default function getTempCart() {
   const email = localStorage.getItem("loginEmail");
-  return axios({
-    method: "GET",
-    url: `${FIREBASE_DOMAIN}/tempCarts.json?auth=${localStorage.getItem(
-      "token"
-    )}&orderBy="loginEmail"&startAt="${email}"&endAt="${email}"`,
-    data: null,
-  }).catch((err) => {
-    console.log(err);
-  });
+  return axios
+    .get(
+      `${FIREBASE_DOMAIN}/tempCarts.json?auth=${localStorage.getItem(
+        "token"
+      )}&orderBy="loginEmail"&startAt="${email}"&endAt="${email}"`
+    )
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export async function upsertTempCart(cartData) {
   const loginEmail = localStorage.getItem("loginEmail");
   let method = "POST";
-  let url = `https://lego-store-reactjs-default-rtdb.firebaseio.com/tempCarts.json?auth=${localStorage.getItem(
+  let url = `${FIREBASE_DOMAIN}/tempCarts.json?auth=${localStorage.getItem(
     "token"
   )}`;
   let bodyRequest = {
@@ -54,7 +52,7 @@ export async function upsertTempCart(cartData) {
 
   if (cartData.id) {
     method = "PATCH";
-    url = `https://lego-store-reactjs-default-rtdb.firebaseio.com/tempCarts/.json?auth=${localStorage.getItem(
+    url = `${FIREBASE_DOMAIN}/tempCarts/.json?auth=${localStorage.getItem(
       "token"
     )}`;
     bodyRequest = { [cartData.id]: bodyRequest };
@@ -70,24 +68,21 @@ export async function upsertTempCart(cartData) {
 export async function deleteTempCart(tempCartId) {
   axios
     .delete(
-      `https://lego-store-reactjs-default-rtdb.firebaseio.com/tempCarts/${tempCartId}.json?auth=${localStorage.getItem(
+      `${FIREBASE_DOMAIN}/tempCarts/${tempCartId}.json?auth=${localStorage.getItem(
         "token"
-      )}`,
-      { data: null }
+      )}`
     )
     .catch((err) => {
       console.log(err);
     });
 }
 
-export async function checkout(authCtx, cartData) {
+export async function checkout(cartData) {
   axios
     .post(
-      `https://lego-store-reactjs-default-rtdb.firebaseio.com/orders.json?auth=${localStorage.getItem(
-        "token"
-      )}`,
+      `${FIREBASE_DOMAIN}/orders.json?auth=${localStorage.getItem("token")}`,
       {
-        user: { loginEmail: authCtx.loginEmail },
+        user: { loginEmail: localStorage.getItem("loginEmail") },
         orderedItems: cartData.items,
         totalAmount: cartData.totalAmount,
       }

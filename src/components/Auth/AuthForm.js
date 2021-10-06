@@ -2,7 +2,6 @@ import { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { actFetchTempCart } from "../../actions/cartActions";
-import { actFetchAllProduct } from "../../actions/productActions";
 
 import AuthContext from "../../store/auth-context";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
@@ -70,7 +69,6 @@ const AuthForm = (props) => {
         );
         authCtx.login(data.email, data.idToken, expirationTime.toISOString());
         props.actFetchTempCart();
-        props.actFetchAllProduct();
         history.replace("/category");
       })
       .catch((err) => {
@@ -127,7 +125,6 @@ const AuthForm = (props) => {
 };
 const mapDispatch = {
   actFetchTempCart,
-  actFetchAllProduct,
 };
 
 export default connect(null, mapDispatch)(AuthForm);

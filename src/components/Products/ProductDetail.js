@@ -1,4 +1,5 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { addItem } from "../../actions/cartActions";
@@ -20,6 +21,11 @@ import {
 } from "react-bootstrap";
 
 const ProductDetail = (props) => {
+  const { productId } = useParams();
+  //Load data
+  useEffect(() => {
+    props.actFetchSingleProduct(productId);
+  }, []);
   const [cartIsShown, setCartIsShown] = useState(false);
   const showCartHandler = () => {
     setCartIsShown(true);

@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
+import { actFetchAllProduct } from "../../actions/productActions";
 
 import ProductItem from "../Products/ProductItem";
 import { Container, Row, Nav, Card } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 const Category = (props) => {
+  //Load data
+  useEffect(() => {
+    props.actFetchAllProduct();
+  }, []);
+
   let productByCategory = {};
   props.loadedProducts.forEach((product) => {
     if (productByCategory[product.category] === undefined) {
@@ -63,4 +70,8 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState, null)(Category);
+const mapDispatch = {
+  actFetchAllProduct,
+};
+
+export default connect(mapState, mapDispatch)(Category);

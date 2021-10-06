@@ -29,7 +29,11 @@ const Layout = (props) => {
             </Spinner>
           </div>
         )}
-        {!props.isLoading && props.children}
+        <div
+          style={props.isLoading ? { display: "none" } : { display: "block" }}
+        >
+          {props.children}
+        </div>
       </main>
     </Fragment>
   );

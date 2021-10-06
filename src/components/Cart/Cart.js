@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import { addItem, removeItem, clearCart } from "../../actions/cartActions";
 
-import AuthContext from "../../store/auth-context";
 import { checkout } from "../../api/api";
 import { Modal, Col, ListGroup, Button } from "react-bootstrap";
 
@@ -11,7 +10,6 @@ const Cart = (props) => {
   const [didSubmit, setDidSubmit] = useState(false);
   const [amountBuyOut, setAmountBuyOut] = useState(1);
   let cartData = props;
-  const authCtx = useContext(AuthContext);
 
   if (props.isBuyNow) {
     cartData = {
@@ -49,7 +47,7 @@ const Cart = (props) => {
   };
 
   const checkoutHandler = async () => {
-    checkout(authCtx, cartData);
+    checkout(cartData);
     setDidSubmit(true);
     if (!props.isBuyNow) {
       cartData.clearCart();

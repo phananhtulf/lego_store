@@ -1,8 +1,7 @@
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { addItem } from "../../actions/cartActions";
-import { actFetchSingleProduct } from "../../actions/productActions";
 
 import classes from "./ProductItem.module.css";
 import { Card, Col, Button, ListGroup, ListGroupItem } from "react-bootstrap";
@@ -21,8 +20,7 @@ const ProductItem = (props) => {
     });
   };
   const loadDetail = () => {
-    props.actFetchSingleProduct(props.id);
-    history.replace(`/product/detail/${props.id}`);
+    history.push(`/product/detail/${props.id}`);
   };
   return (
     <Col className="mb-3" key={props.id}>
@@ -33,7 +31,9 @@ const ProductItem = (props) => {
         />
         <Card.Body>
           <Card.Text>
-            <span className={classes.name}>{props.name}</span>
+            <Link to={`/product/detail/${props.id}`} className={classes.name}>
+              {props.name}
+            </Link>
           </Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
@@ -71,7 +71,6 @@ const ProductItem = (props) => {
 
 const mapDispatch = {
   addItem,
-  actFetchSingleProduct,
 };
 
 export default connect(null, mapDispatch)(ProductItem);

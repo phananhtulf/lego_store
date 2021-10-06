@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { connect } from "react-redux";
+import { actFetchAllProduct } from "../../actions/productActions";
 
 import ProductItem from "./ProductItem";
 import ReactPaginate from "react-paginate";
@@ -28,9 +29,10 @@ const ProductList = (props) => {
   );
   const [productsPerPage] = useState(10);
 
-  if (!props.loadedProducts || props.loadedProducts.length === 0) {
-    return <p className="centered">No products found!</p>;
-  }
+  //Load data
+  useEffect(() => {
+    props.actFetchAllProduct();
+  }, [categoryFilter, searchValue, currentPage]);
 
   //get All Category before slice
   let categoryList = { All: "All" };
@@ -39,8 +41,7 @@ const ProductList = (props) => {
       categoryList[product.category] = product.category;
     }
   });
-  console.log("searchValue:", searchValue);
-  console.log("categoryFilter:", categoryFilter);
+
   // Filter products
   const filterProducts =
     categoryFilter === "All"
@@ -175,7 +176,12 @@ const ProductList = (props) => {
 const mapState = (state) => {
   return {
     loadedProducts: state.productReducer.loadedProducts,
+    isLoading: state.loadingReducer.isLoading,
   };
 };
 
-export default connect(mapState, null)(ProductList);
+const mapDispatch = {
+  actFetchAllProduct,
+};
+
+export default connect(mapState, mapDispatch)(ProductList);
