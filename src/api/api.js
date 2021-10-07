@@ -25,7 +25,7 @@ export async function fetchSingleProduct(productId) {
     });
 }
 
-export async function fetchTempCart() {
+export default async function fetchTempCart() {
   const email = localStorage.getItem("loginEmail");
   return axios
     .get(
