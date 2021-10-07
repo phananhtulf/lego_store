@@ -25,7 +25,7 @@ export async function fetchSingleProduct(productId) {
     });
 }
 
-export default function getTempCart() {
+export async function fetchTempCart() {
   const email = localStorage.getItem("loginEmail");
   return axios
     .get(
@@ -65,18 +65,6 @@ export async function upsertTempCart(cartData) {
   }
 }
 
-export async function deleteTempCart(tempCartId) {
-  axios
-    .delete(
-      `${FIREBASE_DOMAIN}/tempCarts/${tempCartId}.json?auth=${localStorage.getItem(
-        "token"
-      )}`
-    )
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
 export async function checkout(cartData) {
   axios
     .post(
@@ -90,7 +78,15 @@ export async function checkout(cartData) {
     .then((res) => {
       if (res.status === 200 && cartData.id) {
         //delete temp cart After checkout
-        deleteTempCart(cartData.id);
+        axios
+          .delete(
+            `${FIREBASE_DOMAIN}/tempCarts/${
+              cartData.id
+            }.json?auth=${localStorage.getItem("token")}`
+          )
+          .catch((err) => {
+            console.log(err);
+          });
       }
     });
 }

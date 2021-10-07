@@ -1,5 +1,5 @@
 import * as types from "../utils/constants";
-import getTempCart from "../api/api";
+import fetchTempCart from "../api/api";
 import { setIsLoading, setIsLoaded } from "./loadingActions";
 
 export const addItem = (item) => {
@@ -32,7 +32,7 @@ export const loadCart = (cart) => {
 export const actFetchTempCart = () => {
   return (dispatch) => {
     dispatch(setIsLoading());
-    return getTempCart("GET", null)
+    return fetchTempCart("GET", null)
       .then((res) => {
         if (Object.keys(res.data).length > 0) {
           dispatch(
